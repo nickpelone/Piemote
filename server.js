@@ -9,7 +9,7 @@ var http = require('http'),
     path = require('path'),
     express = require('express'),
     app = express(),
-    currentDir = "/media/float/store";
+    currentDir = "/home/nick";
     
 // This is our basic configuration                                                                                                                     
 app.configure(function () {
@@ -21,7 +21,13 @@ app.get("/remote", function(req,res) {
     res.send("A remote will be here, one day.");
 });
 
+app.get("/currentDir.json", function(req,res) {
+    var jsonObject = {};
+        jsonObject["hello"] = "howdy";
+    res.json(jsonObject);
+});
+
 //create our express http server here
 http.createServer(app).listen(3000,function() {
-    console.log("Express server is up on port 3000");
+    console.log("Express server is up on port 3000")
 })
