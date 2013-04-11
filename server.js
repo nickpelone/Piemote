@@ -9,7 +9,7 @@ var http = require('http'),
     path = require('path'),
     express = require('express'),
     app = express(),
-    currentDir = "/home/nick";
+    currentDir = "/home/vagrant";
     
 // This is our basic configuration                                                                                                                     
 app.configure(function () {
@@ -29,5 +29,16 @@ app.get("/currentDir.json", function(req,res) {
 
 //create our express http server here
 http.createServer(app).listen(3000,function() {
-    console.log("Express server is up on port 3000")
-})
+    console.log("Express server is up on port 3000");
+    //print out a directory(the current one)
+    fs.readdir(currentDir, function(err,files) {
+        if(err !== null){
+          for (var i = 0; i < files.length; i++){
+            console.log(files[i]);
+          }
+        }else{
+            console.log("error occured: " + error);
+          }
+        }
+);
+});
