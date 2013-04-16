@@ -11,6 +11,10 @@ var http = require('http'),
     app = express(),
     currentDir = "/home/vagrant";
     
+function moveUpDir() {
+  var parentDir;
+  
+}    
 // This is our basic configuration                                                                                                                     
 app.configure(function () {
     // Define our static file directory, it will be 'public'                                                                                           
@@ -25,20 +29,18 @@ app.get("/currentDir.json", function(req,res) {
     var jsonObject = {};
         jsonObject["hello"] = "howdy";
     res.json(jsonObject);
-});
+f});
 
 //create our express http server here
 http.createServer(app).listen(3000,function() {
     console.log("Express server is up on port 3000");
     //print out a directory(the current one)
-    fs.readdir(currentDir, function(err,files) {
-        if(err !== null){
-          for (var i = 0; i < files.length; i++){
-            console.log(files[i]);
-          }
-        }else{
-            console.log("error occured: " + error);
-          }
-        }
-);
-});
+    fs.readdir(currentDir, function(err,res) {
+      if(err) throw err;
+      for(var i =0; i<res.length;i++) {
+        console.log(res[i]);
+      }
+    });
+    
+//end server
+  });
