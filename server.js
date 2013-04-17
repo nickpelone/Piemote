@@ -91,8 +91,13 @@ app.get("/remote", function(req,res) {
 
 app.get("/currentDir.json", function(req,res) {
     var jsonObject = {};
-        jsonObject["hello"] = "howdy";
-    res.json(jsonObject);
+        getCurrentDirLs(function (response) {
+          console.log("trying to construct currentDir json");
+          for(var i = 0; i<response.length; i++){
+            jsonObject["file #" + i] = response[i];
+          }
+          res.json(jsonObject);
+        });
   });
 
 //create our express http server here
