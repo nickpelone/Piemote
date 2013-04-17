@@ -1,2 +1,3 @@
 Create postable route that receives commands into the server
 (allows client to execute server functions)
+Modify construction of directory list to throw out hidden files '.'

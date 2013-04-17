@@ -14,8 +14,13 @@ var main = function() {
     $.getJSON("/currentdir.json", function (response){
       responseSize = Object.size(response);
       for(var i = 1; i < responseSize; i++){
-        console.log(response[i]);
+        //list files on page
+        //console.log(response[i]);
+        $("#fileList").append("<li>" + response[i] + "</li>");
       }
+      $.get("/currentDir", function(data){
+        $("#currentDir").append("Current directory is: " + data);
+      });
     });
 }
 

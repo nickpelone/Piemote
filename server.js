@@ -100,6 +100,11 @@ app.get("/currentDir.json", function(req,res) {
         });
   });
 
+app.get("/currentDir", function(req,res){
+  getCurrentDir(function (response) {
+    res.send(response);
+  });
+});
 //create our express http server here
 http.createServer(app).listen(3000,function() {
     console.log("Express server is up on port 3000");
