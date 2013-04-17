@@ -94,7 +94,7 @@ app.get("/currentDir.json", function(req,res) {
         getCurrentDirLs(function (response) {
           console.log("trying to construct currentDir json");
           for(var i = 0; i<response.length; i++){
-            jsonObject["file #" + i] = response[i];
+            jsonObject[i] = response[i];
           }
           res.json(jsonObject);
         });
