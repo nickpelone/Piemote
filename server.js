@@ -72,6 +72,13 @@ function listCurrentDir(){
     });
   });
 }
+function getCurrentDirLs(callback) {
+  getCurrentDir(function (currentDirectory){
+    fs.readdir(currentDirectory, function(err,res){
+    callback(res); 
+    });
+  });
+}
   
 // This is our basic configuration                                                                                                                     
 app.configure(function () {
