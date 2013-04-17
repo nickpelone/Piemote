@@ -105,7 +105,7 @@ http.createServer(app).listen(3000,function() {
     console.log("Express server is up on port 3000");
     //
     getCurrentDir( function (response){ 
-      console.log("first working directory:" + response);
+      console.log("first working directory: " + response);
       listCurrentDir();
     });
     //
