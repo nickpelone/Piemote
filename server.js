@@ -84,6 +84,7 @@ function getCurrentDirLs(callback) {
 app.configure(function () {
     // Define our static file directory, it will be 'public'                                                                                           
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.bodyParser());
 });
 app.get("/remote", function(req,res) {
     res.send("A remote will be here, one day.");
@@ -99,6 +100,16 @@ app.get("/currentDir.json", function(req,res) {
           res.json(jsonObject);
         });
   });
+
+app.post("/command", function(req,res){
+  console.log(req.body);
+  console.log("command received:" + req.body.command);
+  if(req.body.command === "moveUpDir"){
+    moveUpDir(function(response){
+      console.log("We were told to move up to: " + response);
+    });
+  }
+});
 
 app.get("/currentDir", function(req,res){
   getCurrentDir(function (response) {

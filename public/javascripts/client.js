@@ -7,10 +7,20 @@ Object.size = function(obj) {
     }
     return size;
 };
+var sendMoveUp = function () {
+  var postObject = {};
+  postObject.command = "moveUpDir";
+  $.post("/command",postObject , function (response) {
+    console.log(response);
+    location.reload(true);
+  })
+}
+
 
 var files = new Array();
 var main = function() {
     console.log("Hello!");
+    
     $.getJSON("/currentdir.json", function (response){
       responseSize = Object.size(response);
       for(var i = 1; i < responseSize; i++){
@@ -21,6 +31,9 @@ var main = function() {
       $.get("/currentDir", function(data){
         $("#currentDir").append("Current directory is: " + data);
       });
+    });
+    $("#moveUpButton").click(function () {
+      sendMoveUp();
     });
 }
 
