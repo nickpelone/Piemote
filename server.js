@@ -107,10 +107,12 @@ app.post("/command", function(req,res){
   if(req.body.command === "moveUpDir"){
     moveUpDir(function(response){
       console.log("We were told to move up to: " + response);
+      getCurrentDir(function (response){
+        console.log("But our current directory is still: " + response);
+      });
     });
   }
 });
-
 app.get("/currentDir", function(req,res){
   getCurrentDir(function (response) {
     res.send(response);
