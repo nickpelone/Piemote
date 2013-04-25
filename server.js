@@ -26,6 +26,8 @@ var http = require('http'),
     startDir,
     sys = require('sys'),
     exec = require('child_process').exec,
+    fork = require('child_process').fork,
+    spawn = require('child_process').spawn,
     cdUp,
     pWD,
     oldDir;
