@@ -33,7 +33,7 @@ var http = require('http'),
     oldDir;
     
     
-function moveUpDir(callback) {
+var moveUpDir = function(callback) {
   cdUp = exec("cd .. && pwd", function(error, stdout, stderr) {
     if(error) throw error;
     if(stderr){
@@ -44,7 +44,7 @@ function moveUpDir(callback) {
   });  
 }
 
-function debugTests(){
+var debugTests = function(){
   getCurrentDir(function (response){ 
     console.log("1. Current working directory: " + response);
       moveUpDir(function (response) {
@@ -55,7 +55,7 @@ function debugTests(){
     });
   });
 }
-function getCurrentDir(callback) {
+var getCurrentDir = function(callback) {
   pWd = exec("pwd", function(error, stdout, stderr) {
     if (error) throw error;
     if (stderr) console.log("stderr!! " + stderr);
@@ -65,7 +65,7 @@ function getCurrentDir(callback) {
   });
 }
 
-function listCurrentDir(){
+var listCurrentDir = function(){
   getCurrentDir(function (currentDirectory){
     fs.readdir(currentDirectory, function(err, res){
       for(var i = 0; i<res.length;i++){
@@ -74,7 +74,7 @@ function listCurrentDir(){
     });
   });
 }
-function getCurrentDirLs(callback) {
+var getCurrentDirLs = function(callback) {
   getCurrentDir(function (currentDirectory){
     fs.readdir(currentDirectory, function(err,res){
     callback(res); 
