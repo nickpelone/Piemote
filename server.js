@@ -28,22 +28,25 @@ var getUserHome = function (){
 }
     
 var getStartContents = function (response) {
-    var returnable;
+    var returnable, dir;
     fs.readdir(getUserHome(), function (err, res) {
+        returnable = res;
+        dir = getUserHome();
         if(err) throw err;
         for(var i = 0; i < res.length; i++){
             (function() {
                 var testing_result = res;
                 var j = i;
-                fs.stat(getUserHome() + "/" + testing_result[j], function (err, stat_res) {
+                /*fs.stat(getUserHome() + "/" + testing_result[j], function (err, stat_res) {
                     if(stat_res.isDirectory() === true){
                         console.log(testing_result[j] + " is a directory");
                     }else if(stat_res.isFile() === true){
                         console.log(testing_result[j] + " is a file");
                     }
-                });
+                });*/
             })();
         }
+        response(returnable, dir);
     });
 }
     
@@ -53,13 +56,16 @@ app.configure(function () {
     app.use(express.bodyParser());
 });
 
+
 //create our http server here
 http.createServer(app).listen(3000,function() {
-    //example check of fs stats
-    fs.stat("/home/vagrant" ,function  (err, response) {
-        console.log(response.isDirectory());
+    getStartContents(function (files, directory) {
+        //list results of callback
+        console.log("results of callback");
+        for(var i = 0; i < files.length; i++){
+            console.log(files[i]);
+        }
     });
-    getStartContents();
     
     //
 });
