@@ -32,7 +32,17 @@ var getStartContents = function (response) {
     fs.readdir(getUserHome(), function (err, res) {
         if(err) throw err;
         for(var i = 0; i < res.length; i++){
-
+            (function() {
+                var testing_result = res;
+                var j = i;
+                fs.stat(getUserHome() + "/" + testing_result[j], function (err, stat_res) {
+                    if(stat_res.isDirectory() === true){
+                        console.log(testing_result[j] + " is a directory");
+                    }else if(stat_res.isFile() === true){
+                        console.log(testing_result[j] + " is a file");
+                    }
+                });
+            })();
         }
     });
 }
@@ -45,11 +55,11 @@ app.configure(function () {
 
 //create our http server here
 http.createServer(app).listen(3000,function() {
-    
     //example check of fs stats
-    fs.stat("/home/vagrant" , function  (err, response) {
+    fs.stat("/home/vagrant" ,function  (err, response) {
         console.log(response.isDirectory());
-    })
+    });
+    getStartContents();
     
     //
 });
