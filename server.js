@@ -32,7 +32,7 @@ var getStartContents = function (response) {
     fs.readdir(getUserHome(), function (err, res) {
         if(err) throw err;
         for(var i = 0; i < res.length; i++){
-            console.log(res[i]);
+
         }
     });
 }
@@ -45,6 +45,11 @@ app.configure(function () {
 
 //create our http server here
 http.createServer(app).listen(3000,function() {
-    getStartContents();
+    
+    //example check of fs stats
+    fs.stat("/home/vagrant" , function  (err, response) {
+        console.log(response.isDirectory());
+    })
+    
     //
 });
