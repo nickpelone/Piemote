@@ -5,11 +5,6 @@
     2013
     
 **/
-
-
-
-
-
 var http = require('http'),
     fs = require('fs'),
     path = require('path'),
@@ -21,51 +16,49 @@ var http = require('http'),
     exec = require('child_process').exec,
     fork = require('child_process').fork,
     spawn = require('child_process').spawn,
-    pWd;
-    
+    pWd;   
 var getUserHome = function (){
     return process.env.HOME;
-}
-    
-var getStartContents = function (response) {
-    var returnable, dir;
-    fs.readdir(getUserHome(), function (err, res) {
+}   
+var getContents = function (response) {
+    var returnable;
+    fs.readdir(currentDir, function (err, res) {
         returnable = res;
-        dir = getUserHome();
         if(err) throw err;
-        for(var i = 0; i < res.length; i++){
-            (function() {
-                var testing_result = res;
-                var j = i;
-                /*fs.stat(getUserHome() + "/" + testing_result[j], function (err, stat_res) {
-                    if(stat_res.isDirectory() === true){
-                        console.log(testing_result[j] + " is a directory");
-                    }else if(stat_res.isFile() === true){
-                        console.log(testing_result[j] + " is a file");
-                    }
-                });*/
-            })();
-        }
-        response(returnable, dir);
+        response(returnable);
     });
 }
-    
+var init = function (callback) {
+    currentDir = getUserHome();
+    callback();
+}
+var determinator = function (input) {
+    //determines if an input from fs.readdir is a file or folder, and prints the result to console.
+    for(var i = 0; i < input.length; i++) {
+        (function (){
+            var _input = input, _i = i;
+            fs.stat(currentDir + "/" + _input[_i], function (err, stat_response) {
+                if(stat_response.isDirectory() === true){
+                    console.log(_input[_i] + " is a directory");
+                }else if(stat_response.isFile() === true){
+                    console.log(_input[_i] + " is a file");
+                }
+            });
+        })();
+    }
+}    
 app.configure(function () {
     // Define our static file directory, it will be 'public'                                                                                           
     app.use(express.static(path.join(__dirname, 'public')));
+    //allows for JSON parsing
     app.use(express.bodyParser());
 });
-
-
 //create our http server here
 http.createServer(app).listen(3000,function() {
-    getStartContents(function (files, directory) {
-        //list results of callback
-        console.log("results of callback");
-        for(var i = 0; i < files.length; i++){
-            console.log(files[i]);
-        }
+    console.log("Express is up: running on port 3000");
+    init(function (){
+        getContents(function (content_response){
+           determinator(content_response); 
+        });
     });
-    
-    //
-});
+});    
