@@ -2,3 +2,5 @@
 .redcar/
 node_modules/
 ._redcar/
+.nide
+notes.txt
