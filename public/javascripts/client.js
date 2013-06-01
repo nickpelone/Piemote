@@ -36,5 +36,5 @@ var main = function() {
       sendMoveUp();
     });
 }
-
+//only execute the javascript after everything is loaded up - important for slow systems like the rasperry pi 
 $(document).ready(main);
